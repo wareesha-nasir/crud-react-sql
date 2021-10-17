@@ -3,7 +3,7 @@ const app=express();
 const bodyParser=require("body-parser")
 const mysql=require("mysql")
 //install cors
-//const cors=require("cors")
+const cors=require("cors")
 
 const db=mysql.createPool({
     host:"localhost",
@@ -12,7 +12,7 @@ const db=mysql.createPool({
     database:"movies_details"
 })
 app.use(bodyParser.urlencoded({extended:true}))
-
+app.use(cors())
 app.use(express.json())
 
 app.get('/api/reviews',(req,res)=>{
@@ -27,6 +27,7 @@ app.post('/api/postreview',(req,res)=>{
     const movieReview=req.body.movieReview;
    const InstSql="INSERT INTO movie_info (movie_name,movie_review) VALUES (?,?)"
     db.query(InstSql,[movieName,movieReview],(err,result)=>{
+       
 //res.send("data inserted")
 console.log(result)
     })
